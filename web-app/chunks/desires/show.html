@@ -1,0 +1,32 @@
+<div style="padding:5px">
+    <div id="desire-content">
+        <h2 class="warning">
+            <span>{{desire.nickname}} wants </span>
+        </h2>
+        <div id="desire-want-block">
+            <textarea rows="5" cols="100" class="disabled"
+                      disabled="disabled">{{desire.description}}</textarea>
+        </div>
+        <br><button type="submit" class="btn-warning btn-small" >I can</button>
+        <i class="icon-map-marker"></i><span> {{desire.geotag}}</span>
+        <i class="icon-time"></i>
+        <span>
+            <time-ago from-time='{{desire.createdOn}}'></time-ago>
+        </span>
+    </div>
+    <div id="comments">
+        <h3>Comments</h3>
+        <ul ng-repeat="comment in desire.comments">
+            <li>
+                <span>{{comment.nickname}} said: {{comment.description}}</span>
+            </li>
+        </ul>
+        <textarea ng-model="description"></textarea><br>
+        <button class="btn-error"
+                ng-click="addComment(desire._id.time + '_' + desire._id.inc, description)">
+            Add comment
+        </button>
+        <a href="#/desire"><button class="btn-error">Back</button></a>
+    </div> </div>
+</div>
+

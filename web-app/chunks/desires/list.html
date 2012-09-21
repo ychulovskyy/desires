@@ -1,0 +1,43 @@
+<div>
+    <!-- Bind the value of this text input to DesireListController.description -->
+    <input ng-model="description" placeholder="New Desire" type="text" style="width:400px"/>
+    <button class="btn-warning" ng-click="createDesire('want', description)">Want</button>
+    <button class="btn-info" ng-click="createDesire('can', description)">Can</button>
+</div>
+
+<div id="home-want-block">
+    <ul ng-repeat="desire in desires | filter : type = 'want' ">
+        <li>
+                <span class="text-info ">{{desire.nickname}} wants
+                    <strong>
+                        <a href="#/desire/{{desire._id.time}}_{{desire._id.inc}}">
+                            {{desire.description}}
+                        </a>
+                    </strong>
+                </span>
+            <br><button type="submit" class="btn-warning btn-small" >I can</button>
+            <i class="icon-map-marker"></i><span> {{desire.geotag}}</span>
+            <i class="icon-time"></i>
+            <span> <time-ago from-time='{{desire.createdOn}}'></time-ago></span>
+        </li>
+    </ul>
+</div>
+
+<div id="home-can-block">
+    <ul ng-repeat="desire in desires | filter : type = 'can' ">
+        <li>
+            <span class="text-info ">{{desire.nickname}} can
+                <strong>
+                    <a href="#/desire/{{desire._id.time}}_{{desire._id.inc}}">
+                        {{desire.description }}
+                    </a>
+                </strong>
+            </span>
+            <br><button type="submit" class="btn-info btn-small" >I want</button>
+            <i class="icon-map-marker"></i>
+            <span> {{desire.geotag}}</span>
+            <i class="icon-time"></i>
+            <span id="agocan"> <time-ago from-time='{{desire.createdOn}}'></time-ago></span>
+        </li>
+    </ul>
+</div>
