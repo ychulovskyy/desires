@@ -7,44 +7,41 @@ class DesireController {
 
     static allowedMethods = [list: "GET", show: "GET", create: "POST", addComment: "POST"]
 
-    def db = MongoService.getDB()
     def static ID = 1
     def static NICKNAME = "Yuriy"
 
     def list() {
-        def desires = [];
-        db.desires.find(status:'active').limit(100).each {
-            desires << it
-        }
+        def desires = Desire.findAllByStatus('active')
         render new JSON(desires)
     }
 
     def show() {
-        def paramArray = params.id.split('_')
-        def desire = db.desires.findOne(_id : new ObjectId(new Date(paramArray[0].toLong()),
-                paramArray[1].toInteger()))
+        def paramArray = params.id.toString().split('_')
+        def desire = Desire.findById(new ObjectId(new Date(paramArray[0].toLong()), paramArray[1].toInteger()))
         render new JSON(desire)
     }
 
     def create() {
-        if (!request.JSON.description.isEmpty()) {
-            db.desires << [userId: ID, nickname: NICKNAME,
-                description: request.JSON.description,
-                createdOn: new Date(), status: "active",
-                type: request.JSON.type,
-                geotag: "IF", comments: []]
+        def submittedDesire = request.JSON
+        if (!submittedDesire.description.isEmpty()) {
+            new Desire(
+                            userId: 1,
+                            nickname: NICKNAME,
+                            description: submittedDesire.description,
+                            createdOn: new Date(),
+                            status: "active",
+                            type: submittedDesire.type,
+                            geotag: "IF",
+                            comments: []).save()
         }
         list()
     }
 
     def addComment() {
-        def paramArray = request.JSON.id.split("_")
-        def desire = db.desires.findOne(_id : new ObjectId(new Date(paramArray[0].toLong()),
-                paramArray[1].toInteger()))
-        desire.comments << [userId: ID,
-                nickname: NICKNAME,
-                description: request.JSON.description]
-        db.desires.save desire
+        def paramArray = request.JSON.id.toString().split("_")
+        def desire = Desire.findById(new ObjectId(new Date(paramArray[0].toLong()), paramArray[1].toInteger()))
+        desire.comments << new Comment(userId: ID, nickname: NICKNAME, description: request.JSON.description)
+        desire.save()
         render new JSON(desire)
     }
 }
