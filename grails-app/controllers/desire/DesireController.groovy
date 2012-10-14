@@ -10,8 +10,10 @@ class DesireController {
     def static ID = 1
     def static NICKNAME = "Yuriy"
 
+    def grailsApplication
+
     def list() {
-        def desires = Desire.findAllByStatus('active')
+        def desires = Desire.findAllByStatus('active', [max:grailsApplication.config.desire.desiresOnPage])
         render new JSON(desires)
     }
 

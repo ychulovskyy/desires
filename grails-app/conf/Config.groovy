@@ -130,3 +130,8 @@ log4j = {
     }
 
 }
+
+desire {
+    desiresOnPage = 20
+
+}

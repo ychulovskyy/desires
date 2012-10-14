@@ -9,7 +9,7 @@ class BootStrap {
         new Desire(userId: 1, nickname: "Yuriy", description: "Learn Groovy",
                 createdOn: new Date(), status: "active",
                 type: "want", geotag: "IF",
-                comments: [new Comment (userId: 3, nickname: "Kolya", description: "Just do it dude")]).save(flush: true)
+                comments: [new Comment (userId: 3, nickname: "Kolya", description: "Just do it dude")]).save()
 
         new Desire(userId: 1, nickname: "Yuriy", description: "Teach Java", createdOn: new Date(), status: "active",
                 type: "can", geotag: "IF", comments: []).save()
