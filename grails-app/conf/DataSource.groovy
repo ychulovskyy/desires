@@ -36,11 +36,12 @@ environments {
     production {
         grails {
             mongo {
-                host = "localhost"
-                port = 27017
-                username = ""
-                password = ""
-                databaseName = "desires"
+                host = System.getenv("OPENSHIFT_NOSQL_DB_HOST")
+                port = Integer.decode(System.getenv("OPENSHIFT_NOSQL_DB_PORT") == null
+                    ? "27017" : System.getenv("OPENSHIFT_NOSQL_DB_PORT"))
+                username = System.getenv("OPENSHIFT_NOSQL_DB_USERNAME")
+                password = System.getenv("OPENSHIFT_NOSQL_DB_PASSWORD")
+                databaseName = System.getenv("OPENSHIFT_GEAR_NAME")
             }
         }
     }
