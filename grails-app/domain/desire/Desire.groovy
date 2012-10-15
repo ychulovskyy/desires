@@ -11,7 +11,7 @@ class Desire {
     Date createdOn
     String type
     String geotag
-    List<Comment> comments
+    ArrayList<Comment> comments
 
     static embedded = ['comments']
     static mapWith = "mongo"
