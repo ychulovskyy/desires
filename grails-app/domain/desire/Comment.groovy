@@ -11,6 +11,5 @@ class Comment {
     static constraints = {
     }
 
-    static mapWith = "mongo"
 
 }

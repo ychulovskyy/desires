@@ -14,7 +14,6 @@ class Desire {
     ArrayList<Comment> comments
 
     static embedded = ['comments']
-    static mapWith = "mongo"
     static hasMany = [comments:Comment]
 
 }
