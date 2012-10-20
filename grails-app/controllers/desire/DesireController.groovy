@@ -13,12 +13,13 @@ class DesireController {
     def grailsApplication
 
     def list() {
-        def desires = Desire.findAllByStatus('active', [max:grailsApplication.config.desire.desiresOnPage])
+        def desires = Desire.findAllByStatus('active',
+                [max:grailsApplication.config.desire.desiresOnPage, sort:"createdOn", order:"desc"])
         render new JSON(desires)
     }
 
     def show() {
-        def desire = Desire.findById(ObjectId.create(params.id.toString()))
+        def desire = Desire.findById(params.id.toString())
         render new JSON(desire)
     }
 
@@ -39,7 +40,7 @@ class DesireController {
     }
 
     def addComment() {
-        def desire = Desire.findById(ObjectId.create(request.JSON.id.toString()))
+        def desire = Desire.findById(request.JSON.id.toString())
         desire.comments << new Comment(userId: ID, nickname: NICKNAME, description: request.JSON.description)
         desire.save()
         render new JSON(desire)

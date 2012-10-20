@@ -1,9 +1,7 @@
 package desire
 
-import org.bson.types.ObjectId
-
 class Comment {
-    ObjectId id
+    String id
     Long userId
     String nickname
     String description

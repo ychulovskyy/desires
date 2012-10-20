@@ -1,9 +1,7 @@
 package desire
 
-import org.bson.types.ObjectId
-
 class Desire {
-    ObjectId id
+    String id
     String status
     Long userId
     String nickname

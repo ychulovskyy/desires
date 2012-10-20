@@ -6,14 +6,7 @@ import org.apache.commons.lang.StringUtils
 class BootStrap {
 
     def init = { servletContext ->
-        initMetaData()
         initTestData()
-    }
-    private void initMetaData() {
-        ObjectId.metaClass.static.create = {String complexId ->
-            def paramArray = StringUtils.split(complexId, '_')
-            new ObjectId(new Date(paramArray[0].toLong()), paramArray[2].toInteger(), paramArray[1].toInteger())
-        }
     }
 
     private void initTestData() {
