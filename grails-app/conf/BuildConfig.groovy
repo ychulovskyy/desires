@@ -35,13 +35,22 @@ grails.project.dependency.resolution = {
         // specify dependencies here under either 'build', 'compile', 'runtime', 'test' or 'provided' scopes eg.
 
         // runtime 'mysql:mysql-connector-java:5.1.20'
+        def seleniumVersion = '2.25.0'
+
+        test("org.seleniumhq.selenium:selenium-htmlunit-driver:${seleniumVersion}") {
+            exclude "xml-apis"
+        }
+        test("org.seleniumhq.selenium:selenium-chrome-driver:${seleniumVersion}")
+        test("org.seleniumhq.selenium:selenium-firefox-driver:${seleniumVersion}")
+        test "org.codehaus.geb:geb-spock:0.7.2"
     }
 
     plugins {
-        runtime ":hibernate:$grailsVersion"
         runtime ":jquery:1.8.0"
         runtime ":resources:1.1.6"
         compile ':mongodb:1.0.0.GA'
+        compile ":geb:0.7.2"
+        compile ':geb-spock:'
 
         // Uncomment these (or add new ones) to enable additional resources capabilities
         //runtime ":zipped-resources:1.0"
@@ -49,8 +58,6 @@ grails.project.dependency.resolution = {
         //runtime ":yui-minify-resources:0.1.4"
 
         build ":tomcat:$grailsVersion"
-
-        runtime ":database-migration:1.1"
 
         compile ':cache:1.0.0'
     }
