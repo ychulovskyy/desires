@@ -23,7 +23,7 @@
         </ul>
         <textarea ng-model="description"></textarea><br>
         <button class="btn-error"
-                ng-click="addComment(desire.id.time + '_' + desire.id.inc, description)">
+                ng-click="addComment(desire.id.time + '_' + desire.id.inc + '_' + desire.id.machine, description)">
             Add comment
         </button>
         <a href="#/desire"><button class="btn-error">Back</button></a>

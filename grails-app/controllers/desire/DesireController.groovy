@@ -39,7 +39,7 @@ class DesireController {
     }
 
     def addComment() {
-        def desire = Desire.findById(ObjectId.create(params.id.toString()))
+        def desire = Desire.findById(ObjectId.create(request.JSON.id.toString()))
         desire.comments << new Comment(userId: ID, nickname: NICKNAME, description: request.JSON.description)
         desire.save()
         render new JSON(desire)
