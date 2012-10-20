@@ -18,8 +18,7 @@ class DesireController {
     }
 
     def show() {
-        def paramArray = params.id.toString().split('_')
-        def desire = Desire.findById(new ObjectId(new Date(paramArray[0].toLong()), paramArray[1].toInteger()))
+        def desire = Desire.findById(ObjectId.create(params.id.toString()))
         render new JSON(desire)
     }
 
@@ -40,8 +39,7 @@ class DesireController {
     }
 
     def addComment() {
-        def paramArray = request.JSON.id.toString().split("_")
-        def desire = Desire.findById(new ObjectId(new Date(paramArray[0].toLong()), paramArray[1].toInteger()))
+        def desire = Desire.findById(ObjectId.create(params.id.toString()))
         desire.comments << new Comment(userId: ID, nickname: NICKNAME, description: request.JSON.description)
         desire.save()
         render new JSON(desire)

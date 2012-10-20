@@ -1,11 +1,16 @@
 package desire
 
+import org.bson.types.ObjectId
+
 class Comment {
-    static mapWith = "mongo"
+    ObjectId id
     Long userId
     String nickname
     String description
 
     static constraints = {
     }
+
+    static mapWith = "mongo"
+
 }

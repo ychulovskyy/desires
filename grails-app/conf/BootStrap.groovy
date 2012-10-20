@@ -1,14 +1,27 @@
 import desire.Comment
 import desire.Desire
+import org.bson.types.ObjectId
+import org.apache.commons.lang.StringUtils
 
 class BootStrap {
 
     def init = { servletContext ->
+        initMetaData()
+        initTestData()
+    }
+    private void initMetaData() {
+        ObjectId.metaClass.static.create = {String complexId ->
+            def paramArray = StringUtils.split(complexId, '_')
+            new ObjectId(new Date(paramArray[0].toLong()), paramArray[2].toInteger(), paramArray[1].toInteger())
+        }
+    }
+
+    private void initTestData() {
         if (!Desire.count()) {
             new Desire(userId: 1, nickname: "Yuriy", description: "Learn Groovy",
                     createdOn: new Date(), status: "active",
                     type: "want", geotag: "IF",
-                    comments: [new Comment (userId: 3, nickname: "Kolya", description: "Just do it dude")]).save()
+                    comments: [new Comment(userId: 3, nickname: "Kolya", description: "Just do it dude")]).save()
 
             new Desire(userId: 1, nickname: "Yuriy", description: "Teach Java", createdOn: new Date(), status: "active",
                     type: "can", geotag: "IF", comments: []).save()
