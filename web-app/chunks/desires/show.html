@@ -1,13 +1,23 @@
 <div style="padding:5px">
     <div id="desire-content">
         <h2 class="warning">
-            <span>{{desire.nickname}} wants </span>
+            <span>{{desire.nickname}}
+                <ng-switch on="desire.type">
+                    <span ng-switch-when="want"> wants</span>
+                    <span ng-switch-default> can</span>
+                </ng-switch>
+            </span>
         </h2>
         <div id="desire-want-block">
             <textarea rows="5" cols="100" class="disabled"
                       disabled="disabled">{{desire.description}}</textarea>
         </div>
-        <br><button type="submit" class="btn-warning btn-small" >I can</button>
+        <br><button type="submit" class="btn-warning btn-small" >
+                <ng-switch on="desire.type">
+                    <span ng-switch-when="want">I can</span>
+                    <span ng-switch-default>I want</span>
+                </ng-switch>
+            </button>
         <i class="icon-map-marker"></i><span> {{desire.geotag}}</span>
         <i class="icon-time"></i>
         <span>

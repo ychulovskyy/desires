@@ -1,38 +1,44 @@
 package desire
 
 import grails.converters.JSON
-import org.bson.types.ObjectId
 
 class DesireController {
 
-    static allowedMethods = [list: "GET", show: "GET", create: "POST", addComment: "POST"]
+    static allowedMethods = [show: "GET", addComment: "PUT"]
 
     def static ID = 1
     def static NICKNAME = "Yuriy"
 
     def grailsApplication
 
-    def list() {
-        def desires = Desire.findAllByStatus('active',
-                [max:grailsApplication.config.desire.desiresOnPage, sort:"createdOn", order:"desc"])
-        render new JSON(desires)
+    def list(String desireType) {
+        def pageNo = Integer.parseInt(params.id?.toString() ?: "0")
+        def itemsPerPage = grailsApplication.config.desire.desiresOnPage
+
+        def desires = Desire.findAllByStatusAndType('active',
+                desireType,
+                [max:itemsPerPage,
+                        sort:"createdOn",
+                        order:"desc",
+                        offset: itemsPerPage * pageNo])
+        render desires as JSON
     }
 
     def show() {
         def desire = Desire.findById(params.id.toString())
-        render new JSON(desire)
+        render desire as JSON
     }
 
-    def create() {
+    def create(String desireType) {
         def submittedDesire = request.JSON
         if (!submittedDesire.description.isEmpty()) {
             new Desire(
-                            userId: 1,
+                            userId: ID,
                             nickname: NICKNAME,
                             description: submittedDesire.description,
                             createdOn: new Date(),
                             status: "active",
-                            type: submittedDesire.type,
+                            type: desireType,
                             geotag: "IF",
                             comments: []).save()
         }
@@ -43,6 +49,6 @@ class DesireController {
         def desire = Desire.findById(request.JSON.id.toString())
         desire.comments << new Comment(userId: ID, nickname: NICKNAME, description: request.JSON.description)
         desire.save()
-        render new JSON(desire)
+        render desire as JSON
     }
 }

@@ -8,7 +8,8 @@
     <link rel="stylesheet" href="css/desire.css" type="text/css">
     <script src="http://code.jquery.com/jquery-1.7.2.js"></script>
     <script src="js/angular-1.0.2.js"></script>
-    <script src="js/application.js"></script>
+    <script src="js/controllers.js"></script>
+    <script src="js/misc.js"></script>
 </head>
 
 <body>

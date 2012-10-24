@@ -1,12 +1,12 @@
 <div>
     <!-- Bind the value of this text input to DesireListController.description -->
     <input ng-model="description" placeholder="New Desire" type="text" style="width:400px"/>
-    <button class="btn-warning" ng-click="createDesire('want', description)">Want</button>
-    <button class="btn-info" ng-click="createDesire('can', description)">Can</button>
+    <button class="btn-warning" ng-click="createWant(description)">Want</button>
+    <button class="btn-info" ng-click="createCan(description)">Can</button>
 </div>
 
 <div id="home-want-block">
-    <ul ng-repeat="desire in desires | filter : type = 'want' ">
+    <ul ng-repeat="desire in wants">
         <li>
                 <span class="text-info ">{{desire.nickname}} wants
                     <strong>
@@ -24,7 +24,7 @@
 </div>
 
 <div id="home-can-block">
-    <ul ng-repeat="desire in desires | filter : type = 'can' ">
+    <ul ng-repeat="desire in cans">
         <li>
             <span class="text-info ">{{desire.nickname}} can
                 <strong>
