@@ -1,6 +1,7 @@
 <div id="home-desire-input">
     <!-- Bind the value of this text input to DesireListController.description -->
-    <input ng-model="description" placeholder="New Desire" type="text" style="width:400px"/>
+    <input ng-model="description" placeholder="New Desire"
+           type="text" style="width:400px" maxlength="500"/>
     <button class="btn-warning" ng-click="createWant(description)">Want</button>
     <button class="btn-info" ng-click="createCan(description)">Can</button>
 </div>

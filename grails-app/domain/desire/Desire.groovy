@@ -14,4 +14,8 @@ class Desire {
     static embedded = ['comments']
     static hasMany = [comments:Comment]
 
+    static constraints = {
+        description size: 3..500
+    }
+
 }

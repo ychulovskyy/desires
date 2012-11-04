@@ -7,7 +7,6 @@ class Comment {
     String description
 
     static constraints = {
+        description size: 3..500
     }
-
-
 }

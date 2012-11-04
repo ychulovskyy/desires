@@ -31,7 +31,8 @@
                 <span>{{comment.nickname}} said: {{comment.description}}</span>
             </li>
         </ul>
-        <textarea ng-model="description"></textarea><br>
+        <textarea ng-model="description" rows="5" cols="100"
+                  maxlength="500"></textarea><br>
         <button class="btn-error"
                 ng-click="addComment(desire.id, description)">
             Add comment
