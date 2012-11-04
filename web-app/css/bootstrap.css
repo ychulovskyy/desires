@@ -3232,11 +3232,17 @@ input[type="button"].btn-block {
   filter: progid:dximagetransform.microsoft.gradient(enabled=false);
 }
 
-.btn-warning:hover,
-.btn-warning:active,
-.btn-warning.active,
 .btn-warning.disabled,
 .btn-warning[disabled] {
+  background-image: -webkit-gradient(linear, 0 0, 0 100%, from(#cccccc), to(#cccccc));
+  color: #ffffff;
+  background-color: #cccccc;
+  *background-color: #cccccc;
+}
+
+.btn-warning:hover,
+.btn-warning:active,
+.btn-warning.active {
   color: #ffffff;
   background-color: #f89406;
   *background-color: #df8505;
@@ -3330,12 +3336,18 @@ input[type="button"].btn-block {
 
 .btn-info:hover,
 .btn-info:active,
-.btn-info.active,
-.btn-info.disabled,
-.btn-info[disabled] {
+.btn-info.active {
   color: #ffffff;
   background-color: #2f96b4;
   *background-color: #2a85a0;
+}
+
+.btn-info.disabled,
+.btn-info[disabled] {
+    background-image: -webkit-gradient(linear, 0 0, 0 100%, from(#cccccc), to(#cccccc));
+    color: #ffffff;
+    background-color: #cccccc;
+    *background-color: #cccccc;
 }
 
 .btn-info:active,

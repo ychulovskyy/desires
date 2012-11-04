@@ -1,4 +1,4 @@
-<div>
+<div id="home-desire-input">
     <!-- Bind the value of this text input to DesireListController.description -->
     <input ng-model="description" placeholder="New Desire" type="text" style="width:400px"/>
     <button class="btn-warning" ng-click="createWant(description)">Want</button>
@@ -21,6 +21,7 @@
             <span> <time-ago from-time='{{desire.createdOn}}'></time-ago></span>
         </li>
     </ul>
+    <button class="btn-large btn-warning  btn-block" ng-click="loadWants()" ng-disabled="!hasMoreWant">  More  </button>
 </div>
 
 <div id="home-can-block">
@@ -40,4 +41,5 @@
             <span id="agocan"> <time-ago from-time='{{desire.createdOn}}'></time-ago></span>
         </li>
     </ul>
+    <button class="btn-large btn-info btn-block" ng-click="loadCans()" ng-disabled="!hasMoreCan">  More  </button>
 </div>

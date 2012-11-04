@@ -1,3 +1,5 @@
+var desiresOnPage = 20;
+
 errorHandler = function(data, status, headers, config) {
     // called asynchronously if an error occurs
     // or server returns response with status
@@ -15,6 +17,12 @@ function DesireListController( $scope, $routeParams, $http ) {
     // bindable list of desires
     $scope.wants = []
     $scope.cans = []
+
+    wantPageId = 0;
+    canPageId = 0;
+
+    $scope.hasMoreWant = true;
+    $scope.hasMoreCan = true;
 
     // save a new desire, based on the "description" property
     $scope.createWant = function(desireDescription) {
@@ -41,18 +49,26 @@ function DesireListController( $scope, $routeParams, $http ) {
             }).error(errorHandler);
     }
 
-    // load all desires
-    loadDesires = function() {
-        $http.get("want/list").success( function( data ) {
-            $scope.wants = data
+    $scope.loadWants = function() {
+        $http.get("want/list/" + wantPageId++).success( function( data ) {
+            if (data.length < desiresOnPage) {
+                $scope.hasMoreWant = false;
+            }
+            $scope.wants = $scope.wants.concat(data)
         }).error(errorHandler);
-        $http.get("can/list").success( function( data ) {
-            $scope.cans = data
+    }
+    $scope.loadCans = function() {
+        $http.get("can/list/" + canPageId++).success( function( data ) {
+            if (data.length < desiresOnPage) {
+                $scope.hasMoreCan = false;
+            }
+            $scope.cans = $scope.cans.concat(data)
         }).error(errorHandler);
     }
 
     // when we first stat up, load all desires
-    loadDesires()
+    $scope.loadWants();
+    $scope.loadCans();
 };
 
 function DesireDetailsController( $scope, $routeParams, $http ) {
@@ -92,4 +108,3 @@ module.config(['$routeProvider', function($routeProvider) {
         when('/desire/:desireId', {templateUrl: 'chunks/desires/show.html', controller: DesireDetailsController}).
         otherwise({redirectTo: '/desire'});
 }]);
-

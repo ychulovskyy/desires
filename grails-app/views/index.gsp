@@ -13,6 +13,6 @@
 </head>
 
 <body>
-    <div ng-view></div>
+    <div ng-view id="main"></div>
 </body>
 </html>
