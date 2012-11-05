@@ -4,7 +4,7 @@ errorHandler = function(data, status, headers, config) {
     // called asynchronously if an error occurs
     // or server returns response with status
     // code outside of the <200, 400) range
-    alert("Error " + status)
+    alert("Error #" + status + " with message '" + data + "'")
 }
 
 function DesireListController( $scope, $routeParams, $http ) {
