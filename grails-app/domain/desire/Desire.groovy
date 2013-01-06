@@ -3,7 +3,7 @@ package desire
 class Desire {
     String id
     String status
-    Long userId
+    String userId
     String nickname
     String description
     Date createdOn

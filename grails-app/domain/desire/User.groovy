@@ -1,22 +1,16 @@
 package desire
 
-class User {
-    String id
-    String login
-    String password
+class User extends SecUser {
     String email
     String nickname
     String description
     String avatarId // id of image
-    String role
     String status
 
     static constraints = {
-        login unique: true
-        email unique: true
-        password password:true
-        status inList:["active", "blocked", "deleted"]
-        role inList:["user", "moderator", "admin"]
+        email unique: true, nullable: true
+        description nullable: true
         avatarId nullable:true
+        status inList:["active", "blocked", "deleted"]
     }
 }

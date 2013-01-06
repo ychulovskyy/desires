@@ -14,5 +14,6 @@
 
 <body>
     <div ng-view id="main"></div>
+    <g:render template='/includes/ajaxLogin'/>
 </body>
 </html>

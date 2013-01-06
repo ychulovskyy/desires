@@ -135,3 +135,7 @@ desire {
     desiresOnPage = 20
 
 }
+// Added by the Spring Security Core plugin:
+grails.plugins.springsecurity.userLookup.userDomainClassName = 'desire.SecUser'
+grails.plugins.springsecurity.userLookup.authorityJoinClassName = 'desire.SecUserSecRole'
+grails.plugins.springsecurity.authority.className = 'desire.SecRole'

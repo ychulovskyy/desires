@@ -1,15 +1,15 @@
 package desire
 
 import grails.converters.JSON
+import grails.plugins.springsecurity.Secured
 
 class DesireController {
 
     static allowedMethods = [show: "GET", addComment: "PUT"]
 
-    def static ID = 1
-    def static NICKNAME = "Yuriy"
-
     def grailsApplication
+
+    def springSecurityService
 
     def list(String desireType) {
         def pageNo = Integer.parseInt(params.id?.toString() ?: "0")
@@ -24,6 +24,7 @@ class DesireController {
         render desires as JSON
     }
 
+    @Secured(['IS_AUTHENTICATED_ANONYMOUSLY'])
     def show() {
         def desire = Desire.findById(params.id.toString())
         render desire as JSON
@@ -32,9 +33,10 @@ class DesireController {
     def create(String desireType) {
         def submittedDesire = request.JSON
         if (!submittedDesire.description.isEmpty()) {
+            def user = currentUser
             new Desire(
-                            userId: ID,
-                            nickname: NICKNAME,
+                            userId: user.id,
+                            nickname: user.nickname,
                             description: submittedDesire.description,
                             createdOn: new Date(),
                             status: "active",
@@ -45,10 +47,16 @@ class DesireController {
         list()
     }
 
+    @Secured(['IS_AUTHENTICATED_FULLY'])
     def addComment() {
         def desire = Desire.findById(request.JSON.id.toString())
-        desire.comments << new Comment(userId: ID, nickname: NICKNAME, description: request.JSON.description)
+        def user = currentUser
+        desire.comments << new Comment(userId: user.id, nickname: user.nickname, description: request.JSON.description)
         desire.save()
         render desire as JSON
+    }
+
+    private getCurrentUser() {
+        return User.get(springSecurityService.principal.id)
     }
 }

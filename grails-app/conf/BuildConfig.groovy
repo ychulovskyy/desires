@@ -50,7 +50,7 @@ grails.project.dependency.resolution = {
         runtime ":resources:1.1.6"
         compile ':mongodb:1.0.0.GA'
         compile ":geb:0.7.2"
-        compile ':geb-spock:'
+        compile ":spring-security-core:1.2.7.3"
 
         // Uncomment these (or add new ones) to enable additional resources capabilities
         //runtime ":zipped-resources:1.0"
