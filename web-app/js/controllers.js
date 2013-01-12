@@ -87,12 +87,24 @@ function DesireDetailsController( $scope, $routeParams, $http ) {
         }).error(errorHandler);
     }
 
-    $scope.addComment = function(desireId, commentDescription) {
+    $scope.createComment = function(desireId, commentDescription) {
         $http.put(
-            "desire/addComment",
+            "desire/" + desireId + "/comment/create",
             {
-                id: desireId,
                 description: commentDescription
+            }
+        ).success( function( data ) {
+                $scope.desire = data
+                $scope.description = ""
+        }).error(errorHandler);
+    }
+
+    $scope.deleteComment = function(desireId, commentId) {
+        $http(
+            {
+                method: 'DELETE', url: "desire/" + desireId + "/comment/delete/" + commentId
+            },
+            {
             }
         ).success( function( data ) {
                 $scope.desire = data

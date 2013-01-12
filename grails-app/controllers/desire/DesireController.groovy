@@ -5,7 +5,7 @@ import grails.plugins.springsecurity.Secured
 
 class DesireController {
 
-    static allowedMethods = [show: "GET", addComment: "PUT"]
+    static allowedMethods = [show: "GET"]
 
     def grailsApplication
 
@@ -47,13 +47,11 @@ class DesireController {
         list()
     }
 
-    @Secured(['IS_AUTHENTICATED_FULLY'])
-    def addComment() {
-        def desire = Desire.findById(request.JSON.id.toString())
-        def user = currentUser
-        desire.comments << new Comment(userId: user.id, nickname: user.nickname, description: request.JSON.description)
-        desire.save()
-        render desire as JSON
+    def update() {
+        // we are not going to support editing
+        // to avoid situation like:
+        // users can agree on something and creator can change the desire completely
+        throw new UnsupportedOperationException("Unsupported operation")
     }
 
     private getCurrentUser() {

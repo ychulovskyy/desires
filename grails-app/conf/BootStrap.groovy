@@ -4,6 +4,7 @@ import desire.SecRole
 import desire.SecUser
 import desire.SecUserSecRole
 import desire.User
+import org.bson.types.ObjectId
 
 class BootStrap {
 
@@ -36,18 +37,35 @@ class BootStrap {
                     status : "active").save(failOnError:true)
             SecUserSecRole.create user, userRole
         }
+
+        Desire.where{}.deleteAll()
         if (!Desire.count()) {
             def user = User.findAll().get(0);
 
-            new Desire(userId: user.id , nickname: user.nickname, description: "Learn Groovy",
+            def desire = new Desire(userId: user.id , nickname: user.nickname, description: "Learn Groovy",
                     createdOn: new Date(), status: "active",
-                    type: "want", geotag: "IF",
-                    comments: [new Comment(userId: 3, nickname: "Kolya", description: "Just do it dude")]).save(failOnError:true)
+                    type: "want", geotag: "IF", comments: [])
+            desire.comments << new Comment(
+                    commentId: new ObjectId().toString(),
+                    userId: user.id,
+                    nickname: user.nickname,
+                    description: "Just do it dude")
+            desire.comments << new Comment(
+                    commentId: new ObjectId().toString(),
+                    userId: user.id,
+                    nickname: user.nickname,
+                    description: "tada!")
+            desire.comments << new Comment(
+                    commentId: new ObjectId().toString(),
+                    userId: user.id,
+                    nickname: user.nickname,
+                    description: "tada===========!")
+            desire.save()
 
             new Desire(userId: user.id , nickname: user.nickname, description: "Teach Java", createdOn: new Date(), status: "active",
-                    type: "can", geotag: "IF", comments: []).save(failOnError:true)
+                    type: "can", geotag: "IF", comments: []).save()
 
-            new Desire(userId: user.id , nickname: user.nickname, description: "Find a dude to visit New Zeland togather",
+            new Desire(userId: user.id , nickname: user.nickname, description: "Find a dude to visit New Zeland together",
                     createdOn: new Date(), status: "active",
                     type: "want", geotag: "IF",
                     comments: []).save(failOnError:true)

@@ -135,6 +135,9 @@ desire {
     desiresOnPage = 20
 
 }
+
+grails.gorm.failOnError=true
+
 // Added by the Spring Security Core plugin:
 grails.plugins.springsecurity.userLookup.userDomainClassName = 'desire.SecUser'
 grails.plugins.springsecurity.userLookup.authorityJoinClassName = 'desire.SecUserSecRole'
