@@ -7,7 +7,9 @@
     <link rel="stylesheet" href="css/bootstrap.css" type="text/css">
     <link rel="stylesheet" href="css/desire.css" type="text/css">
     <script src="http://code.jquery.com/jquery-1.7.2.js"></script>
-    <script src="js/angular-1.0.2.js"></script>
+    <script src="js/angular.js"></script>
+    <script src="js/angular-resource.js"></script>
+    <script src="js/resources.js"></script>
     <script src="js/controllers.js"></script>
     <script src="js/misc.js"></script>
 </head>

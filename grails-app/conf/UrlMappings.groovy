@@ -1,13 +1,18 @@
 class UrlMappings {
 
 	static mappings = {
-        "/desire/$desireid?/comment/$action?/$id?"(controller: "comment")
 
-        "/$controller/$action?/$id?"{
-			constraints {
-				// apply constraints here
-			}
-		}
+        name comments: "/desire/$desireid?/comment/$id?"(controller: "comment", parseRequest: true) {
+            action = [POST: "create", GET: "read", PUT: "update", DELETE: "delete"]
+        }
+
+        name search: "/search"(controller: "search", parseRequest:true){
+            action = [GET: "search"]
+        }
+
+        name crud: "/$controller/$id?"(parseRequest:true){
+            action = [POST: "create", GET: "read", PUT: "update", DELETE: "delete"]
+        }
 
         "/login/$action?"(controller: "login")
         "/logout/$action?"(controller: "logout")

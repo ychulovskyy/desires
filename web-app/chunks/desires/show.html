@@ -29,14 +29,14 @@
         <h3>Comments</h3>
         <ul ng-repeat="comment in desire.comments">
             <li>
-                <a href="#" ng-click="deleteComment(desire.id, comment.commentId)"><i class="icon-trash"></i> Delete</a>
+                <a href="#" ng-click="Comment.delete({desireId : desire.id, commentId : comment.commentId})"><i class="icon-trash"></i> Delete</a>
                 <span>{{comment.commentId}} {{comment.nickname}} said: {{comment.description}}</span>
             </li>
         </ul>
         <textarea ng-model="description" rows="5" cols="100"
                   maxlength="500"></textarea><br>
         <button class="btn-error"
-                ng-click="createComment(desire.id, description)">
+                ng-click="Comment.save({desireId : desire.id, 'description' : description})">
             Add comment
         </button>
         <a href="#/desire"><button class="btn-error">Back</button></a>

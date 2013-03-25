@@ -78,6 +78,7 @@ if (!catalinaBase) catalinaBase = '.'   // just in case
 def logDirectory = "${catalinaBase}/logs"
 
 log4j = {
+
     development {
         console name: 'consoleAppender', layout: pattern(conversionPattern: '%d{ISO8601} %-5p [%c{2}] %m%n')
     }
@@ -107,6 +108,8 @@ log4j = {
                     'org.springframework',
                     'org.hibernate',
                     'net.sf.ehcache.hibernate'
+            all 'org.codehaus.groovy.grails.web.mapping'
+
 
         }
         test {
@@ -142,3 +145,5 @@ grails.gorm.failOnError=true
 grails.plugins.springsecurity.userLookup.userDomainClassName = 'desire.SecUser'
 grails.plugins.springsecurity.userLookup.authorityJoinClassName = 'desire.SecUserSecRole'
 grails.plugins.springsecurity.authority.className = 'desire.SecRole'
+
+

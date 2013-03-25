@@ -12,7 +12,7 @@ errorHandler = function(data, status, headers, config) {
     }
 }
 
-function DesireListController( $scope, $routeParams, $http ) {
+function DesireListController($scope, $routeParams, $http) {
     $scope.loadtime = (new Date()).getTime();
 
     // description for a new desire
@@ -28,45 +28,14 @@ function DesireListController( $scope, $routeParams, $http ) {
     $scope.hasMoreWant = true;
     $scope.hasMoreCan = true;
 
-    // save a new desire, based on the "description" property
-    $scope.createWant = function(desireDescription) {
-        $http.put(
-            "want/create",
-            {
-                description: desireDescription
-            }
-        ).success( function( data ) {
-                $scope.wants = data
-                $scope.description = ""
-        }).error(errorHandler);
-    }
-
-    $scope.createCan = function(desireDescription) {
-        $http.put(
-            "can/create",
-            {
-                description: desireDescription
-            }
-        ).success( function( data ) {
-                $scope.cans = data
-                $scope.description = ""
-            }).error(errorHandler);
-    }
-
     $scope.loadWants = function() {
-        $http.get("want/list/" + wantPageId++).success( function( data ) {
-            if (data.length < desiresOnPage) {
-                $scope.hasMoreWant = false;
-            }
-            $scope.wants = $scope.wants.concat(data)
+        $http.get("search?type=want").success( function( data ) {
+            $scope.wants = data
         }).error(errorHandler);
     }
     $scope.loadCans = function() {
-        $http.get("can/list/" + canPageId++).success( function( data ) {
-            if (data.length < desiresOnPage) {
-                $scope.hasMoreCan = false;
-            }
-            $scope.cans = $scope.cans.concat(data)
+        $http.get("search?type=can").success( function( data ) {
+            $scope.cans = data
         }).error(errorHandler);
     }
 
@@ -80,43 +49,13 @@ function DesireDetailsController( $scope, $routeParams, $http ) {
     $scope.loadtime = (new Date()).getTime()
 
     $scope.loadDesire = function() {
-        $http.get(
-            "desire/show/" + $routeParams.desireId
-        ).success( function( data ) {
-                $scope.desire = data
-        }).error(errorHandler);
+        $scope.desire = $scope.Desire.get({'id': $routeParams.desireId});
     }
 
-    $scope.createComment = function(desireId, commentDescription) {
-        $http.put(
-            "desire/" + desireId + "/comment/create",
-            {
-                description: commentDescription
-            }
-        ).success( function( data ) {
-                $scope.desire = data
-                $scope.description = ""
-        }).error(errorHandler);
-    }
-
-    $scope.deleteComment = function(desireId, commentId) {
-        $http(
-            {
-                method: 'DELETE', url: "desire/" + desireId + "/comment/delete/" + commentId
-            },
-            {
-            }
-        ).success( function( data ) {
-                $scope.desire = data
-                $scope.description = ""
-        }).error(errorHandler);
-    }
-
-    // when we first stat up, load desire
-    $scope.loadDesire()
+    $scope.loadDesire();
 }
 
-var module = angular.module('desireApp', []);
+var module = angular.module('desireApp', ['ngResource']);
 
 module.config(['$routeProvider', function($routeProvider) {
     $routeProvider.
@@ -125,3 +64,33 @@ module.config(['$routeProvider', function($routeProvider) {
         otherwise({redirectTo: '/desire'});
 }]);
 
+module.factory('sharedResources',
+    function($resource) {
+        var resources = {}
+        resources.Want = $resource('/desire/want/:id', {id:'@id'});
+        resources.Can = $resource('/desire/can/:id', {id:'@id'});
+        resources.Desire = $resource('/desire/desire/:id', {id:'@id'});
+        resources.Comment = $resource('/desire/desire/:desireId/comment/:commentId',
+            {desireId:'@desireId', commentId:'@commentId'});
+        return resources;
+    }
+)
+
+module.factory('search',
+    function($http) {
+        return function (fillData, params) {
+            $http.get("search?" + params).success( function( data ) {
+                fillData = data
+            }).error(errorHandler);
+        }
+    }
+)
+
+module.run(function($rootScope, search, sharedResources, $timeout) {
+    $rootScope.search = search;
+    $rootScope.timeout = $timeout;
+    $rootScope.Want = sharedResources.Want;
+    $rootScope.Can = sharedResources.Can;
+    $rootScope.Desire = sharedResources.Desire;
+    $rootScope.Comment = sharedResources.Comment;
+});

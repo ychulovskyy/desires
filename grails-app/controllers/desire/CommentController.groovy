@@ -6,8 +6,6 @@ import org.bson.types.ObjectId
 
 class CommentController {
 
-    static allowedMethods = [create: "PUT", delete: "DELETE"]
-
     def grailsApplication
 
     def springSecurityService
@@ -25,7 +23,7 @@ class CommentController {
         render desire as JSON
     }
 
-    //@Secured(['IS_AUTHENTICATED_FULLY'])
+    @Secured(['IS_AUTHENTICATED_ANONYMOUSLY'])
     def delete() {
         def desire = Desire.findById(params.desireid.toString())
         Comment comment = null
